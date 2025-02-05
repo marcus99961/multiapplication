@@ -84,10 +84,10 @@ onMounted(() => {
                                     <span class="text-danger text-sm" v-if="errors && errors.pagination_limit">{{ errors.pagination_limit[0] }}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="paginationLimit">Indivitual Location Input (true/false)</label>
+                                    <label for="paginationLimit">Individual Location Input (true/false)</label>
                                     <input v-model="settings.location_input" type="text" class="form-control" id="paginationLimit"
                                         placeholder="Enter true or false">
-                                    <span class="text-danger text-sm" v-if="errors && errors.update_mail">{{ errors.location_input[0] }}</span>
+                                    <span class="text-danger text-sm" v-if="errors && errors.location_input">{{ errors.location_input[0] }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="paginationLimit">Clear Data (true/false)</label>
