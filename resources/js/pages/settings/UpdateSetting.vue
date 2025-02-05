@@ -84,23 +84,29 @@ onMounted(() => {
                                     <span class="text-danger text-sm" v-if="errors && errors.pagination_limit">{{ errors.pagination_limit[0] }}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="paginationLimit">Update Mailable (true/false)</label>
-                                    <input v-model="settings.update_mail" type="text" class="form-control" id="paginationLimit"
+                                    <label for="paginationLimit">Indivitual Location Input (true/false)</label>
+                                    <input v-model="settings.location_input" type="text" class="form-control" id="paginationLimit"
                                         placeholder="Enter true or false">
-                                    <span class="text-danger text-sm" v-if="errors && errors.update_mail">{{ errors.update_mail[0] }}</span>
+                                    <span class="text-danger text-sm" v-if="errors && errors.update_mail">{{ errors.location_input[0] }}</span>
                                 </div>
                                 <div class="form-group">
+                                    <label for="paginationLimit">Clear Data (true/false)</label>
+                                    <input v-model="settings.clear_data" type="text" class="form-control" id="paginationLimit"
+                                        placeholder="Enter true or false">
+                                    <span class="text-danger text-sm" v-if="errors && errors.clear_data">{{ errors.clear_data[0] }}</span>
+                                </div>
+                                <!-- <div class="form-group">
                                     <label for="paginationLimit">To</label>
                                     <input v-model="settings.to" type="text" class="form-control" id="paginationLimit"
                                         placeholder="Enter To">
                                     <span class="text-danger text-sm" v-if="errors && errors.to">{{ errors.to[0] }}</span>
-                                </div>
-                                <div class="form-group">
+                                </div> -->
+                                <!-- <div class="form-group">
                                     <label for="paginationLimit">Daily Email List (CC)</label>
                                     <textarea rows="6" v-model="settings.dailyemail" type="text" class="form-control" id="dailyemail"
                                         placeholder="Email List"/>
                                     <span class="text-danger text-sm" v-if="errors && errors.dailyemail">{{ errors.dailyemail[0] }}</span>
-                                </div>
+                                </div> -->
                             </div>
 
                             <div class="card-footer">

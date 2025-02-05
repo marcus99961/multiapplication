@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
         ]);
         \DB::table('departments')->insert([
             'name' => 'IT',
-            'email' => 'it@inyalakehotel.com',          
+            'department_code' => 'C5001',          
             'created_at'=> Carbon::today(),
            
 

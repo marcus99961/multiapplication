@@ -21,8 +21,5 @@ class Department extends Model
     {
         return $this->created_at->diffForHumans();
     }
-    public function userDepartment(): HasOneThrough
-    {
-        return $this->hasOneThrough(Complaint::class, User::class, 'department_id','user_id','id','id' );
-    }
+   
 }

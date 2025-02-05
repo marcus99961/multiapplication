@@ -1,72 +1,50 @@
 <template>
-     <div class="row justify-content-center">
-        <div class="col-md-6">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
             <div class="card">
-                <div class="card-header text-light">
+                <div class="card-header">
                     <div class="row">
-                        <div class="col-md-12" >
-                                <h5 style="text-align: center;">TEst</h5>
-                                
-                                </div>
+                        <div class="col-md-6">
+                            <h5 class="float-start">{{ title }}</h5>
                         </div>
-                    </div>
-                        <div class="card-body">
-                    <div class="shadow p-3 mb-5 bg-body rounded">
-
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Category</th>                              
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr v-for="(category, index) in departmentcategories " :key="index" class="bg-transparent">
-                                <td>{{index + 1}}</td>                                
-                                <td>{{category.name}}</td>
-                              
-                               
-                                <td><button @click="removeLink(category.id)" class="btn-danger"><i class="fa-solid fa-trash"></i></button></td>
-          
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header text-light">
-                    <div class="row">
-                       
-                        <div class="col-md-12">
-                                                     
-                            <button @click="createCategory"  class="btn-info btn-sm float-end mx-2">Add New Category</button>
-                        
+                        <!-- <div class="col-md-4 float-center">
+                            <input class="form-control-sm rounded" type="text" v-model="keyword" placeholder="search category..">
+                        </div> -->
+                        <div class="col-md-6">
+                            <button @click="createCategory"  class="btn-info btn-sm float-right"><i class="fa fa-plus-circle mr-1"></i>New Category</button>
                         </div>
                     </div>
 
                 </div>
                 <div class="card-body">
                     <div class="shadow p-3 mb-5 bg-body rounded">
-
+                        <!-- <h3>{{ current_category.name }}</h3> -->
                         <table class="table">
                             <thead>
-                            <tr>                               
-                                <th>Category</th>                              
+                            <tr>
+                                <th>#</th>    
+                                <th>Group Code</th>                          
+                                <th>Category</th>
+                                <th>Inventory Code</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="(category, index) in categories " :key="index" class="bg-transparent">                                                     
+                            <tr v-for="(category, index) in categories " :key="index" class="bg-transparent">
+                                <td>{{index + 1}}</td>
+                                <td>{{category.group_code}}</td>
                                 <td>{{category.name}}</td>
-                              
+                                <td>{{category.inv_code}}</td>
                                
-                                <td><button @click="AddCategory(category)" class="btn btn-success btn-sm mx-1"><i class="fa-solid fa-plus"></i></button>
-                                <button @click="editCategory(category)" class="btn btn-warning btn-sm mx-1"><i class="fa-solid fa-pencil"></i></button></td>
-          
+
+
+                                <td>
+                                    <button @click="editCategory(category)" class="ml-1" ><i class="fa fa-edit text-success mx-1"></i></button>
+                                    <button @click="removeCategory(category)" class="ml-1"><i class="fa fa-trash text-danger mx-1"></i></button>                               
+
+
+                                </td>
+
                             </tr>
                             </tbody>
                         </table>
@@ -90,11 +68,23 @@
                     <div class="row" v-show="!deleteMode && !renewMode">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="title" >Category Name.</label>
+                                <label for="title" >Group Code</label>
+                                <input type="text" class="form-control" v-model="categoryData.group_code" >
+                                <small class="text-danger" v-if="errors.group_code"> {{ errors.group_code[0] }} </small><br>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="title" >Category Name</label>
                                 <input type="text" class="form-control" v-model="categoryData.name" >
-                                <input type="hidden" v-model="categoryData.id">
                                 <small class="text-danger" v-if="errors.name"> {{ errors.name[0] }} </small><br>
-
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="title" >Inv Code</label>
+                                <input type="text" class="form-control" v-model="categoryData.inv_code" >
+                                <small class="text-danger" v-if="errors.inv_code"> {{ errors.inv_code[0] }} </small><br>
                             </div>
                         </div>
 
@@ -125,7 +115,6 @@
 </template>
 
 <script>
-import Swal from 'sweetalert2';
 export default {
     setup: () => ({
         title: 'All Categories'
@@ -136,24 +125,18 @@ export default {
             deleteMode: false,
             renewMode:false,
             keyword: null,
-            form: { id : ''},
 
             categoryData: {
+                group_code: '',
                 name: '',
+                inv_code: '',
           
 
             },
-           
-            categoryErrors: {
-                name: false,
-                
-
-            },
+        
             categories: {},
             current_user: {},
             errors: {},
-            departmentcategories: {},
-            
         }
     },
     watch: {
@@ -163,25 +146,12 @@ export default {
     },
     mounted(){
         this.getCategories()
-        this.getDepartmentcategories()
     },
     created(){
-        
-        this.form.id = this.$route.params.id
+        console.log(window.user)
+        this.current_user = window.user
     },
     methods: {
-        getDepartmentcategories(){
-
-            axios.get('/api/getDepartmentcategories/'+this.form.id,{ params: { keyword: this.keyword } }).then(response=>{
-                this.departmentcategories = response.data
-            }).catch(errors=>{
-                console.log(errors)
-            });
-            
-            },
-
-
-            
         getCategories(){
 
             axios.get('/api/getCategories').then(response=>{
@@ -197,7 +167,7 @@ export default {
             $('#categoryModal').modal('show')
         },
         deleteCategory(){
-            axios.post(window.url + 'api/deleteCategory/' + this.categoryData.id).then(response => {
+            axios.delete('/api/deleteCategory/' + this.categoryData.id).then(response => {
                 this.getCategories()
             }).catch(errors => {
                 console.log(errors)
@@ -205,92 +175,43 @@ export default {
                 $('#categoryModal').modal('hide')
             });
         },
-        renew(category){
-            this.renewMode = true
-            this.deleteMode = false
-            this.editMode = false
-
-            this.categoryData= {
-                id : category.id,
-                renew: category.renew,
-
-            }
-            $('#categoryModal').modal('show')
-
-        },
+    
         editCategory(category){
             this.editMode = true
             this.deleteMode= false
             this.categoryData= {
                 id : category.id,
                 name :category.name,
-       
+                group_code : category.group_code,
+                inv_code : category.inv_code,
             }
-            this.categoryErrors= {
-                name: false,
-                phone: false,
-
-            }
+        
             $('#categoryModal').modal('show')
         },
         updateCategory(){
 
 
 
-            axios.post('/api/updateCategory', this.categoryData).then(response => {
+            axios.post('/api/updateCategory/' + this.categoryData.id, this.categoryData).then(response => {
                 $('#categoryModal').modal('hide');
-                    this.getCategories()
+                this.getCategories()
                 }).catch(error =>this.errors = error.response.data.errors)
 
 
+
         },
-        
-        removeLink(id) {
-        Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            axios.delete(`/api/departmentcategory/${id}`)
-                .then((response) => {
-                   
-                    Swal.fire(
-                        'Deleted!',
-                        'Your category has been deleted.',
-                        'success'
-                    )
-                });
-                this.getDepartmentcategories()
-        }
-    })
-    },
-        AddCategory(category){
-
-            this.categoryData = { id : category.id }
-                axios.post('/api/departmentCategory/'+this.form.id,this.categoryData).then(response => {
-                    this.getCategories()
-                    this.getDepartmentcategories()
-                }).catch(errors => {
-                    console.log(errors)
-                });
-
-            },
+     
         createCategory(){
             this.editMode = false
             this.deleteMode = false
             this.categoryData= {
                 id: '',
-                category_no: '',
+                name: '',
              
 
             }
             this.categoryErrors= {
-                category_no: false,
+                name: false,
 
             }
             $('#categoryModal').modal('show')
@@ -305,14 +226,13 @@ export default {
             reader.readAsDataURL(file);
         },
         storeCategory(){
-
-
-           
+         
                 axios.post('/api/storeCategory', this.categoryData).then(response=>{
                     $('#categoryModal').modal('hide');
-                    this.getCategories()
+                this.getCategories()
                 }).catch(error =>this.errors = error.response.data.errors)
 
+        
 
             
         }

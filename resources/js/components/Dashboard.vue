@@ -1,39 +1,7 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 
-const selectedAppointmentStatus = ref('all');
-const totalAppointmentsCount = ref(0);
 
-const getAppointmentsCount = () => {
-    axios.get('/api/stats/appointments', {
-        params: {
-            status: selectedAppointmentStatus.value,
-        }
-    })
-    .then((response) => {
-        totalAppointmentsCount.value = response.data.totalAppointmentsCount;
-    })
-};
-const messagecounts = ref();
-const getcounts = async () => {
-  await axios.get('/api/getcounts')
-    .then((response) => {
-        messagecounts.value = response.data;
-
-    })
-};
-const selectedDateRangeComplaint = ref('today');
-const totalComplaintsCount = ref();
-const getComplaintsCount = () => {
-    axios.get('/api/stats/complaints', {
-        params: {
-            date_range: selectedDateRangeComplaint.value,
-        }
-    })
-    .then((response) => {
-        totalComplaintsCount.value = response.data.totalComplaintsCount;
-    });
-};
 const selectedDateRange = ref('today');
 const totalUsersCount = ref(0);
 
@@ -49,10 +17,10 @@ const getUsersCount = () => {
 };
 
 onMounted(() => {
-    getAppointmentsCount();
+ 
     getUsersCount();
-    getcounts();
-    getComplaintsCount();
+  
+  
 });
 </script>
 <template>
@@ -124,31 +92,7 @@ onMounted(() => {
                         </router-link>
                     </div>            
                 </div>
-                <div class="col-lg-3 col-6">
-                    <div class="small-box bg-info">
-                        <div class="inner">
-                            <div class="d-flex justify-content-between">
-                                <h3>{{ totalComplaintsCount }}</h3>
-                                <select v-model="selectedDateRangeComplaint" @change="getComplaintsCount()" style="height: 2rem; outline: 2px solid transparent;" class="px-1 rounded border-0">
-                                    <option value="today">Today</option>
-                                    <option value="30_days">30 days</option>
-                                    <option value="60_days">60 days</option>
-                                    <option value="360_days">360 days</option>
-                                    <option value="month_to_date">Month to Date</option>
-                                    <option value="year_to_date">Year to Date</option>
-                                </select>
-                            </div>
-                            <p>Complaints</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-bag"></i>
-                        </div>
-                        <router-link to="/admin/complaintpages" class="small-box-footer">
-                            View Complaints
-                            <i class="fas fa-arrow-circle-right"></i>
-                        </router-link>
-                    </div>
-                </div>
+              
             </div>
 
         </div>

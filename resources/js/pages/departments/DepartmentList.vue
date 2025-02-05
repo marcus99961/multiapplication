@@ -24,6 +24,7 @@
                             <tr>
                                 <th>#</th>                              
                                 <th>Department.</th>
+                                <th>Department Code</th>
                                 <th>Created at</th>
                                 <th>Action</th>
                             </tr>
@@ -33,15 +34,15 @@
                                 <td>{{index + 1}}</td>
 
                                 <td>{{department.name}}</td>
-                               
-                                <td>
+                               <td>{{ department.department_code }}</td>
+                                <td v-if="department.created_at">
                                     {{department.createdHumanReadable}}
                                     <!-- {{department.reg_no.length <=15 ? department.reg_no : department.reg_no.substr(0,15) + '...'}} -->
                                 </td>
 
                                 <td>
                                     <button @click="editDepartment(department)"><i class="fa fa-edit text-success ml-2"></i></button>
-                                    <router-link :to="`/admin/categories/${ department.id }`" class="btn btn-sm btn-info mx-1">Category</router-link>
+                                    <!-- <router-link :to="`/admin/categories/${ department.id }`" class="btn btn-sm btn-info mx-1">Category</router-link> -->
                                     <!-- <button @click="removeDepartment(department)" class="btn btn-danger btn-sm mx-1">Delete</button>
                                     <button @click="renew(department)" class="btn btn-danger btn-sm mx-1">Renew</button> -->
 

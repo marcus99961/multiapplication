@@ -5,13 +5,23 @@ import UserList from './pages/users/UserList.vue';
 import UpdateSetting from './pages/settings/UpdateSetting.vue';
 import UpdateProfile from './pages/profile/UpdateProfile.vue';
 import Login from './pages/auth/Login.vue';
-import Lost from './pages/lostnfound/ItemList.vue';
+
 import RoomList from './pages/rooms/RoomList.vue';
 import MemberList from './pages/members/MemberList.vue';
 import MemberDepartment from './pages/members/MemberDepartment.vue';
 import CategoryList from './pages/categories/CategoryList.vue';
 import DepartmentList from './pages/departments/DepartmentList.vue';
 import ComplaintList from './pages/complaints/ComplaintList.vue';
+import ItemList from './pages/items/ItemList.vue';
+import UnitList from './pages/units/UnitList.vue';
+import StockList from './pages/stocks/StockList.vue';
+import StockListByLocation from './pages/stocks/StockListByLocation.vue';
+import ReceiveList from './pages/receives/ReceiveList.vue';
+import SupplierList from './pages/suppliers/SupplierList.vue';
+import InvoiceList from './pages/invoices/InvoiceList.vue';
+import IssueList from './pages/issues/IssueList.vue';
+import IssueItem from './pages/issues/IssueItem.vue';
+import LocationList from './pages/locations/LocationList.vue';
 import ComplaintListPage from './pages/complaints/ComplaintListPage.vue';
 import ServiceComplaint from './pages/complaints/ServiceComplaint.vue';
 import UserComplaint from './pages/complaints/UserComplaint.vue';
@@ -32,9 +42,9 @@ export default [
         component: Dashboard,
     },
     {
-        path: '/admin/lostnfound',
-        name: 'admin.lost',
-        component: Lost,
+        path: '/admin/locations',
+        name: 'admin.location',
+        component: LocationList,
     },
     {
         path: '/admin/members',
@@ -47,7 +57,7 @@ export default [
         component: MemberDepartment,
     },
     {
-        path: '/admin/categories/:id',
+        path: '/admin/categories',
         name: 'admin.category',
         component: CategoryList,
     },
@@ -57,10 +67,51 @@ export default [
         component: RoomList,
     },
     {
+        path: '/admin/stocks',
+        name: 'admin.stock',
+        component: StockList,
+    },
+    {
+        path: '/admin/stocklists/:id',
+        name: 'admin.stocklist',
+        component: StockListByLocation,
+    },
+    {
+        path: '/admin/invoices',
+        name: 'admin.invoice',
+        component: InvoiceList,
+    },
+    {
+        path: '/admin/issues',
+        name: 'admin.issue',
+        component: IssueList,
+    },
+    {
+        path: '/admin/issueitems/:id',
+        name: 'admin.issueitem',
+        component: IssueItem,
+    },
+    {
+        path: '/admin/suppliers',
+        name: 'admin.supplier',
+        component: SupplierList,
+    },
+    {
         path: '/admin/complaints',
         name: 'admin.complaint',
         component: ComplaintList,
     },
+    {
+        path: '/admin/items',
+        name: 'admin.item',
+        component: ItemList,
+    },
+    {
+        path: '/admin/units',
+        name: 'admin.unit',
+        component: UnitList,
+    },
+    
     {
         path: '/admin/complaintpages',
         name: 'admin.complaintpages',
@@ -96,7 +147,11 @@ export default [
         name: 'admin.message',
         component: MessageList,
     },
-
+    {
+        path: '/admin/receives/:id',
+        name: 'admin.receive',
+        component: ReceiveList,
+    },
 
     {
         path: '/admin/appointments',

@@ -54,15 +54,71 @@ const logout = () => {
                             </p>
                         </router-link>
                     </li>
-                    <!-- <li class="nav-item">
-                        <router-link to="/admin/complaintpages" active-class="active" class="nav-link">
-                            <i class="nav-icon fa-solid fa-blender-phone"></i>
+                    <li class="nav-item">
+                        <router-link to="/admin/categories" active-class="active" class="nav-link">
+                            <i class="nav-icon fa-solid fa-circle"></i>
                             <p>
-                            Complaints
+                            Category
                             </p>
                         </router-link>
                     </li>
                     <li class="nav-item">
+                        <router-link to="/admin/units" active-class="active" class="nav-link">
+                            <i class="nav-icon fa-solid fa-circle"></i>
+                            <p>
+                            Unit Measure
+                            </p>
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="/admin/items" active-class="active" class="nav-link">
+                            <i class="nav-icon fa-solid fa-circle"></i>
+                            <p>
+                            Item
+                            </p>
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="/admin/locations" active-class="active" class="nav-link">
+                            <i class="nav-icon fa-solid fa-circle"></i>
+                            <p>
+                            Location
+                            </p>
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="/admin/suppliers" active-class="active" class="nav-link">
+                            <i class="nav-icon fa-solid fa-circle"></i>
+                            <p>
+                            Supplier
+                            </p>
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="/admin/invoices" active-class="active" class="nav-link">
+                            <i class="nav-icon fa-solid fa-circle"></i>
+                            <p>
+                            Purchase
+                            </p>
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="/admin/issues" active-class="active" class="nav-link">
+                            <i class="nav-icon fa-solid fa-circle"></i>
+                            <p>
+                            Issue
+                            </p>
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="/admin/stocks" active-class="active" class="nav-link">
+                            <i class="nav-icon fa-solid fa-circle"></i>
+                            <p>
+                            Inventory
+                            </p>
+                        </router-link>
+                    </li>
+                 <!--    <li class="nav-item">
                         <router-link to="/admin/servicecomplaint" active-class="active" class="nav-link">
                             <i class="nav-icon fa-solid fa-magnifying-glass"></i>
                             <p>
@@ -165,4 +221,5 @@ const logout = () => {
         </div>
 
     </aside>
+    
 </template>

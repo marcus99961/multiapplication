@@ -6,9 +6,9 @@ import { useStorage } from '@vueuse/core'
 export const useSettingStore = defineStore('SettingStore', () => {
     const setting = ref({
         app_name: '',
-        dailyemail: '',
-        to: '',
+        location_input: '',
         pagination_limit: '',
+        clear_data:'',
 
     });
 

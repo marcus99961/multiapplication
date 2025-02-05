@@ -17,38 +17,34 @@ class CategoryController extends Controller
         return response()->json($room);
     }
 
-
-    public function index2(Request $request)
+    public function index2()
     {
+        $room = Category::orderBy('name')->pluck('name')->toArray();
+        return response()->json($room);
+    }
+    // public function index2(Request $request)
+    // {
         
-        $category = \DB::table('departmentcategories')
-        ->join('categories','departmentcategories.category_id','categories.id')
-         ->where('departmentcategories.department_id',Department::where('name',$request->keyword)->first()->id)
-        ->select('departmentcategories.*','categories.name')
-        ->pluck('categories.name')->toArray();
-        //Departmentcategory::pluck('name')->toArray();
-        return response()->json($category);
+    //     $category = \DB::table('departmentcategories')
+    //     ->join('categories','departmentcategories.category_id','categories.id')
+    //      ->where('departmentcategories.department_id',Department::where('name',$request->keyword)->first()->id)
+    //     ->select('departmentcategories.*','categories.name')
+    //     ->pluck('categories.name')->toArray();
+    //     //Departmentcategory::pluck('name')->toArray();
+    //     return response()->json($category);
        
        
-    }
+    // }
 
 
-    public function selectedcategory()
-    {
-        $selected = \DB::table('complaintrooms')
-        ->join('rooms','complaintrooms.room_id','rooms.id')
-        ->select('rooms.name','complaintrooms.*')
-        ->get();
-        return response()->json($selected);
-    }
 
 
     public function store(Request $request)
     {
         $validateData = $request->validate([
             'name' => 'required|unique:categories|min:2',
-            // 'currency' => 'required',
-            // 'payment_type' => 'required',
+            'group_code' => 'required|unique:categories',
+            'inv_code' => 'required',
 
            ],
            [
@@ -57,19 +53,22 @@ class CategoryController extends Controller
            ]
         );
            
-        $room = new Category();
-        $room->name = $request->name;
+        $category = new Category();
+        $category->name = $request->name;
+        $category->group_code = $request->group_code;
+        $category->inv_code = $request->inv_code;
 
 
-        $room->save();
+        $category->save();
         return response()->json('Success');
     }
-    public function update(Request $request)
+    public function update($id,Request $request)
     {
         $validateData = $request->validate([
-            'name' => 'required|unique:categories',
-            // 'currency' => 'required',
-            // 'payment_type' => 'required',
+            'name' => 'required|unique:categories,name,'.$id,
+            'group_code' => 'required|unique:categories,group_code,'.$id,
+            'inv_code' => '',
+
 
            ],
            [
@@ -80,6 +79,8 @@ class CategoryController extends Controller
            
        Category::where('id',$request->id)->update([
         'name'=>$request->name,
+        'group_code'=> $request->group_code,
+        'inv_code' => $request->inv_code,
        ]);
        
 
@@ -101,35 +102,14 @@ class CategoryController extends Controller
     }
 
 
-    public function Link(request $request,$id)
+    public function destroy(Category $category)
     {
-        
 
-       
-           $verify =  \DB::table('departmentcategories')
-           ->where('department_id',$id)
-           ->where('category_id',$request->id)
-           ->first();
-           if(!$verify){
-        $categorylink = new Departmentcategory();
-        $categorylink->department_id = $id;
-        $categorylink->category_id = $request->id;
-        $categorylink->save();
+        $category->delete();
 
-        return response()->json('Success');
+        return response()->noContent();
     }
-    }
+    
    
-    public function unlink($id)
-    {
-
-        //dd($id);
-        \DB::table('departmentcategories')
-        ->where('id',$id)        
-        ->delete();
-
-
-
-        return response()->json('success');
-    }
+  
 }
