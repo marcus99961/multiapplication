@@ -49,6 +49,19 @@ Here is the YouTube playlist link: https://www.youtube.com/watch?v=IoPOi-Xp_Ng&l
 - ```npm run dev```
 - You can now log in with user "john@example.com", password "password"
 
+php artisan cache:clear
+chmod -R 777 storage/
+composer dump-autoload
+php artisan passport:install
+
+after that you run this:
+
+php artisan passport:keys --force
+
+then:
+
+sudo chmod -R 0777 ./storage 
+
 
 ## Authors
 
